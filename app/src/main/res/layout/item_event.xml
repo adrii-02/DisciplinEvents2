@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_margin="@dimen/marginTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/azulClaro_1">
+
+            <TextView
+                android:id="@+id/HastaLasHorario"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:gravity="center"
+                android:text="00:00:00"
+                app:layout_constraintStart_toEndOf="@+id/HastaLas"
+                app:layout_constraintTop_toBottomOf="@+id/switchDiaCompleto" />
+
+            <TextView
+                android:id="@+id/HastaLas"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:gravity="center"
+                android:text="@string/hasta_las"
+                app:layout_constraintStart_toEndOf="@+id/DesdeLasHorario"
+                app:layout_constraintTop_toBottomOf="@+id/switchDiaCompleto" />
+
+            <TextView
+                android:id="@+id/DesdeLasHorario"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:gravity="center"
+                android:text="00:00:00"
+                app:layout_constraintStart_toEndOf="@+id/DesdeLas"
+                app:layout_constraintTop_toBottomOf="@+id/switchDiaCompleto" />
+
+            <TextView
+                android:id="@+id/DesdeLas"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:gravity="center"
+                android:text="@string/desde_las"
+                app:layout_constraintStart_toEndOf="@+id/img"
+                app:layout_constraintTop_toBottomOf="@+id/switchDiaCompleto" />
+
+            <TextView
+                android:id="@+id/nombreEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/marginTop"
+                android:text="Nombre del Evento"
+                android:textSize="@dimen/size_text1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img"
+                style="@style/imgStandardLogo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="@dimen/marginTop"
+                android:contentDescription="@string/fotoEvento"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nombreEvento"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/txtCalendario"
+                android:layout_width="100dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/marginTop"
+                android:layout_marginTop="@dimen/marginTop"
+                android:gravity="center"
+                android:text="20/01/2023"
+                app:layout_constraintStart_toEndOf="@+id/img"
+                app:layout_constraintTop_toTopOf="@+id/img" />
+
+            <Switch
+                android:id="@+id/switchDiaCompleto"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="@string/todo_el_dia"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtCalendario"
+                app:layout_constraintTop_toTopOf="@+id/img"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

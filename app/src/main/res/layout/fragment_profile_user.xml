@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/BeigeClaro_1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profileUser">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/imgLogoStandardWidth"
+        android:layout_height="@dimen/imgLogoStandardHeight"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="180dp"
+        app:civ_border_color="@color/azulClaro_2"
+        app:civ_border_width="@dimen/borderLogoStandard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars">
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+</androidx.constraintlayout.widget.ConstraintLayout>
