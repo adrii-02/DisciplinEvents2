@@ -1,11 +1,9 @@
-package cat.copernic.disciplinevents
+package cat.copernic.disciplinevents.activitys
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import cat.copernic.disciplinevents.databinding.ActivityLoginBinding
 import cat.copernic.disciplinevents.databinding.ActivityMainBinding
-import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Hide app bar
         if (supportActionBar != null)
             supportActionBar!!.hide()
 

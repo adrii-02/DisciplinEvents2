@@ -1,0 +1,124 @@
+package cat.copernic.disciplinevents.activitys
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
+import cat.copernic.disciplinevents.databinding.ActivityRegisterBinding
+import cat.copernic.disciplinevents.model.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
+class Register : AppCompatActivity() {
+
+    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //HIDE APP BAR
+        if (supportActionBar != null)
+            supportActionBar!!.hide()
+
+        //INIT LAYOUT
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        //INIT AUTH
+        auth = Firebase.auth
+
+        //LOGIN
+        binding.txtTienesCuenta.setOnClickListener{
+            startActivity(Intent(this, Login::class.java))
+            finish()
+        }
+
+        //REGISTER
+        binding.btnRegister.setOnClickListener{
+            var email = binding.inputEmail2.text.toString().lowercase()
+            var password = binding.inputPassword2.text.toString()
+            var repPassword = binding.inputRepPassword2.text.toString()
+
+            //Create variable builder for AlertDialog
+            val builder = AlertDialog.Builder(this)
+
+            //Filters register
+            if(password.equals(repPassword) && emptyCamp(email,password,repPassword)){
+                register(email,password)
+
+            } else if(email.isBlank() && password.isNotEmpty()){
+                builder.setTitle("Error")
+                builder.setMessage("El correo no puede estar vacío")
+                builder.setPositiveButton("Aceptar", null)
+                val dialog = builder.create()
+                dialog.show()
+
+            } else if(!password.equals(repPassword)){
+                builder.setTitle("Error")
+                builder.setMessage("La contraseña no coincide")
+                builder.setPositiveButton("Aceptar", null)
+                val dialog = builder.create()
+                dialog.show()
+
+            } else if(password.isBlank() && email.isNotEmpty()){
+                builder.setTitle("Error")
+                builder.setMessage("La contraseña no puede estar vacía")
+                builder.setPositiveButton("Aceptar", null)
+                val dialog = builder.create()
+                dialog.show()
+
+            } else if(email.isBlank() && password.isBlank()){
+                builder.setTitle("Error")
+                builder.setMessage("Los campos no pueden estar vacíos")
+                builder.setPositiveButton("Aceptar", null)
+                val dialog = builder.create()
+                dialog.show()
+
+            }
+        }
+    }
+
+    //FUN EMPTY CAMPS
+    private fun emptyCamp(email:String, password:String, repPassword:String):Boolean{
+        return email.isNotEmpty()&&password.isNotEmpty()&&repPassword.isNotEmpty()
+    }
+
+    //FUN REGISTER
+    private fun register(email: String, password: String){
+
+        //Create variable builder for AlertDialog
+        val builder = AlertDialog.Builder(this)
+
+        //Create new user with email & password
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this) { task ->
+            if(task.isSuccessful){
+                var userObj = readData()
+
+                //Navigation to main activity
+                startActivity(Intent(this, MainActivity::class.java))
+
+            } else{
+                builder.setTitle("Error")
+                builder.setMessage("El registro ha fallado")
+                builder.setPositiveButton("Aceptar", null)
+                val dialog = builder.create()
+                dialog.show()
+
+            }
+        }
+    }
+
+    //FUN READ DATA
+    private fun readData():User{
+
+        //Save values
+        var name = binding.inputNombre2.text.toString()
+        var lastName = binding.inputApellido2.text.toString()
+        var email = binding.inputEmail2.text.toString()
+
+        //Return object
+        return User(name, lastName, email, null)
+    }
+}

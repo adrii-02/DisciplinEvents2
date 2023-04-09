@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     android:background="@color/BeigeClaro_1"
-    tools:context=".Login">
+    tools:context=".activitys.Login">
 
     <ScrollView
         android:layout_width="match_parent"

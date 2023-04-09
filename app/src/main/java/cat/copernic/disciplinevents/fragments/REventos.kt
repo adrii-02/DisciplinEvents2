@@ -1,10 +1,11 @@
-package cat.copernic.disciplinevents
+package cat.copernic.disciplinevents.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cat.copernic.disciplinevents.R
 
 class REventos : Fragment() {
 

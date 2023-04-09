@@ -1,11 +1,10 @@
-package cat.copernic.disciplinevents
+package cat.copernic.disciplinevents.activitys
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import cat.copernic.disciplinevents.databinding.ActivityRecoverPasswordBinding
-import cat.copernic.disciplinevents.databinding.ActivityRegisterBinding
 
 class recoverPassword : AppCompatActivity() {
 
@@ -13,6 +12,10 @@ class recoverPassword : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //HIDE APP BAR
+        if (supportActionBar != null)
+            supportActionBar!!.hide()
 
         //INICIAR LAYOUT CON BINDING
         binding = ActivityRecoverPasswordBinding.inflate(layoutInflater)

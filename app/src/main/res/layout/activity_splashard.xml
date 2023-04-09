@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BeigeClaro_1"
-    tools:context=".Splashard">
+    tools:context=".activitys.Splashard">
 
     <ImageView
         android:id="@+id/imageView"

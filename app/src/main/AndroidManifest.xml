@@ -13,23 +13,23 @@
         android:theme="@style/Theme.DisciplinEvents"
         tools:targetApi="32">
         <activity
-            android:name=".Login"
+            android:name=".activitys.Login"
             android:exported="false" />
         <activity
-            android:name=".recoverPassword"
+            android:name=".activitys.recoverPassword"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".activitys.Register"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activitys.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Splashard"
+            android:name=".activitys.Splashard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
