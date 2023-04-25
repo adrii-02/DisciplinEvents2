@@ -9,6 +9,10 @@
         <item name="colorSecondary">@color/azulClaro_2</item>
         <item name="colorSecondaryVariant">@color/azulClaro_1</item>
         <item name="colorOnSecondary">@color/azulClaro_1</item>
+
+        <!--Action Bar-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Status bar color. -->
         <!--<item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
         <!-- Customize your theme here. -->

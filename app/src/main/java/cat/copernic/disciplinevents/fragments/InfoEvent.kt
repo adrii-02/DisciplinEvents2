@@ -7,16 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import cat.copernic.disciplinevents.R
-import cat.copernic.disciplinevents.databinding.ActivityLoginBinding
 import cat.copernic.disciplinevents.databinding.FragmentInfoEventBinding
-import cat.copernic.disciplinevents.databinding.FragmentREventosBinding
+import cat.copernic.disciplinevents.databinding.FragmentProfileUserBinding
 
-class REventos : Fragment() {
 
-    private lateinit var binding: FragmentREventosBinding
+class InfoEvent : Fragment() {
+
+    private lateinit var binding: FragmentInfoEventBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+
+
 
         }
     }
@@ -24,23 +27,22 @@ class REventos : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*
-        HABILITAR CUANDO EL RECYRCLER VIEW FUNCIONE
-
-        binding.calendarView.setOnClickListener{
-            findNavController().navigate(R.id.)
+        //OnClick btn turn
+        binding.btnVolver.setOnClickListener{
+            //Nav to rEvents
+            findNavController().navigate(R.id.action_infoEvent_to_REventos)
         }
-        */
 
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
 
         // Inflate the layout for this fragment init binding
-        binding = FragmentREventosBinding.inflate(inflater, container, false)
+        binding = FragmentInfoEventBinding.inflate(inflater, container, false)
         return binding.root
     }
 }

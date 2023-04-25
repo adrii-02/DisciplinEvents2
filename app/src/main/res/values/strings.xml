@@ -38,4 +38,9 @@
     <string name="fotoEvento">fotoEvento</string>
     <string name="desde_las">Desde las</string>
     <string name="hasta_las">Hasta las</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="foto_perfil">foto_perfil</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
 </resources>

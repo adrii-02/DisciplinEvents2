@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".fragments.profileUser">
 
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="@dimen/btnStandardWidth"
+        android:layout_height="@dimen/btnStandardHeight"
+        android:layout_marginBottom="60dp"
+        android:text="Cancelar"
+        android:textSize="@dimen/size_text2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/img_usuario"
         android:layout_width="@dimen/imgLogoStandardWidth"
@@ -41,15 +51,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Button
-        android:id="@+id/btn_editar"
+        android:id="@+id/btnGuardar"
         android:layout_width="@dimen/btnStandardWidth"
         android:layout_height="@dimen/btnStandardHeight"
         android:layout_marginBottom="60dp"
-        android:text="editar"
+        android:text="guardar"
         android:textSize="@dimen/size_text2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView3"

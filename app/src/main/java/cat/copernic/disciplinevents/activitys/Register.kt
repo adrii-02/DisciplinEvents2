@@ -118,7 +118,7 @@ class Register : AppCompatActivity() {
         var lastName = binding.inputApellido2.text.toString()
         var email = binding.inputEmail2.text.toString()
 
-        //Return object
+        //Return object with values
         return User(name, lastName, email, null)
     }
 }
