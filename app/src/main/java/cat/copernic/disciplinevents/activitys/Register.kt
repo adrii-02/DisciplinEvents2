@@ -26,7 +26,7 @@ class Register : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //INIT AUTH
+        //GET INSTANCE
         auth = Firebase.auth
 
         //LOGIN

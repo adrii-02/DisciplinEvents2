@@ -20,12 +20,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var binding: ActivityMainBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //INIT LAYOUT
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //GET INSTANCE
+        auth = Firebase.auth
 
         //START -> LATERAL MENU & TOOLBAR
         //Set ActionBar into Toolbar
@@ -63,13 +70,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (item.itemId) {
             R.id.REventos -> {
+                //Nav to REvents
                 navController?.navigate(R.id.REventos)
             }
             R.id.profileUser -> {
+                //Nav to profileUser
                 navController?.navigate(R.id.profileUser)
             }
             R.id.cerrarSession -> {
                 // Fun logout
+                logOut(auth)
             }
         }
 
@@ -96,5 +106,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    //FUN LOGOUT
+    private fun logOut(auth: FirebaseAuth){
+        //LogOut
+        auth.signOut()
+
+        //Nav to Login
+        val intent = Intent(this, Login::class.java)
+        startActivity(intent)
+        finish()
     }
 }

@@ -25,7 +25,7 @@ class Login : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //INIT AUTH
+        //GET INSTANCE
         auth = Firebase.auth
 
         //REGISTER
@@ -101,6 +101,17 @@ class Login : AppCompatActivity() {
                 dialog.show()
 
             }
+        }
+    }
+
+    //SAVE SESSION
+    override fun onStart() {
+        super.onStart()
+        val user = Firebase.auth.currentUser
+        if (user != null) {
+            var intent = Intent(this@Login, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
