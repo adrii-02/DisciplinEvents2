@@ -4,7 +4,11 @@ plugins {
 
     // Add the Google services Gradle plugin
     id 'com.google.gms.google-services'
+
+    // Add Parcelable
+    id("kotlin-parcelize")
 }
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     namespace 'cat.copernic.disciplinevents'
@@ -76,18 +80,19 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
-    //Navigation
-    def nav_version = "2.4.0"
 
     // Dependency for Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
 
     //Dependency for Menu
     implementation("com.google.android.material:material:1.6.0")
 
     //Dependencies Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
+
+
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
 

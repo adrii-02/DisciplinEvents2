@@ -8,6 +8,8 @@
     <!--BUTTONS-->
     <dimen name="btnStandardWidth">200dp</dimen>
     <dimen name="btnStandardHeight">60dp</dimen>
+    <dimen name="btnSmallWidth">100dp</dimen>
+    <dimen name="btnSmalldHeight">40dp</dimen>
 
     <!--ICONS-->
     <dimen name="iconWidth">63dp</dimen>

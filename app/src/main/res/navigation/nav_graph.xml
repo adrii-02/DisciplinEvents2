@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/editInfoEvent">
+    app:startDestination="@id/REventos">
 
     <!--NAV PRINCIPAL-->
     <fragment
@@ -14,9 +14,11 @@
         <action
             android:id="@+id/action_REventos_to_infoEvent"
             app:destination="@id/infoEvent" />
+
         <action
             android:id="@+id/action_REventos_to_editInfoEvent"
-            app:destination="@id/editInfoEvent" />
+            app:destination="@id/editInfoEvent">
+        </action>
     </fragment>
 
     <!--NAV INFO EVENT TO PRINCIPAL-->
@@ -39,6 +41,12 @@
         <action
             android:id="@+id/action_editInfoEvent_to_REventos"
             app:destination="@id/REventos" />
+        <argument
+            android:name="currentEvent"
+            app:argType="cat.copernic.disciplinevents.model.Event" />
+        <action
+            android:id="@+id/action_editInfoEvent_to_editInfoTime"
+            app:destination="@id/editInfoTime" />
     </fragment>
 
     <!--NAV PROFILE USER TO EDIT PROFILE USER-->
@@ -60,5 +68,29 @@
         <action
             android:id="@+id/action_editProfileUser_to_profileUser"
             app:destination="@id/profileUser" />
+        <argument
+            android:name="currentUser"
+            app:argType="cat.copernic.disciplinevents.model.User" />
+    </fragment>
+    <fragment
+        android:id="@+id/createEvent"
+        android:name="cat.copernic.disciplinevents.fragments.CreateEvent"
+        android:label="fragment_create_event"
+        tools:layout="@layout/fragment_create_event" >
+        <action
+            android:id="@+id/action_createEvent_to_REventos"
+            app:destination="@id/REventos" />
+    </fragment>
+    <fragment
+        android:id="@+id/editInfoTime"
+        android:name="cat.copernic.disciplinevents.fragments.editInfoTime"
+        android:label="fragment_edit_info_time"
+        tools:layout="@layout/fragment_edit_info_time" >
+        <argument
+            android:name="currentTime"
+            app:argType="cat.copernic.disciplinevents.model.Time" />
+        <action
+            android:id="@+id/action_editInfoTime_to_editInfoEvent"
+            app:destination="@id/editInfoEvent" />
     </fragment>
 </navigation>

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import cat.copernic.disciplinevents.R
 import cat.copernic.disciplinevents.databinding.FragmentEditProfileUserBinding
 import cat.copernic.disciplinevents.databinding.FragmentInfoEventBinding
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide
 class EditProfileUser : Fragment() {
 
     private lateinit var binding: FragmentEditProfileUserBinding //Binding
+    private val args by navArgs<EditProfileUserArgs>()
     private lateinit var getContent: ActivityResultLauncher<String> //Implicit Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +71,12 @@ class EditProfileUser : Fragment() {
 
         // Inflate the layout for this fragment init binding
         binding = FragmentEditProfileUserBinding.inflate(inflater, container, false)
+
+        //Add values of object in Layout
+        binding.nombre.text = args.currentUser.name
+        binding.apellido.text = args.currentUser.lastName
+        binding.genero.text = args.currentUser.gender
+
         return binding.root
     }
 }
