@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var bd: FirebaseFirestore
     private lateinit var userDAO: UserDAO
 
-
+    //COMMIT DE PRUEBA PARA EL GITHUB
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
