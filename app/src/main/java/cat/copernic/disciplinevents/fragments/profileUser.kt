@@ -16,7 +16,7 @@ class profileUser : Fragment() {
 
     private lateinit var binding: FragmentProfileUserBinding
     //Obj User temporal
-    private val user = User("juanito", "mercedes", "masculino", ArrayList<Event>())
+    private val user = User("juanito", "mercedes", "juanito.mercedes@gmail.com", "masculino", ArrayList<Event>())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

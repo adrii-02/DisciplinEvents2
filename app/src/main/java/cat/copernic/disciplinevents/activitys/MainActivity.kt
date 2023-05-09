@@ -11,6 +11,7 @@ import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
@@ -22,12 +23,15 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.navigation.fragment.findNavController
+import cat.copernic.disciplinevents.DAO.UserDAO
 import cat.copernic.disciplinevents.databinding.AppBarMainBinding
 import cat.copernic.disciplinevents.databinding.FragmentREventosBinding
 import cat.copernic.disciplinevents.fragments.CreateEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +39,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var bd: FirebaseFirestore
+    private lateinit var userDAO: UserDAO
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +50,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Init userDAO
+        userDAO = UserDAO()
+
         //GET INSTANCE
-        auth = Firebase.auth
+        auth = userDAO.getCurrentUser()
+        bd = userDAO.getCurrentDB()
 
         //START -> LATERAL MENU & TOOLBAR
         //Set ActionBar into Toolbar

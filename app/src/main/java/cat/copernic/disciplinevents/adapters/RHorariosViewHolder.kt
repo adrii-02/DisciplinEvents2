@@ -2,7 +2,7 @@ package cat.copernic.disciplinevents.adapters
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import cat.copernic.disciplinevents.databinding.ItemEventBinding
+import cat.copernic.disciplinevents.databinding.ItemInfoEventBinding
 import cat.copernic.disciplinevents.databinding.ItemTimeBinding
 import cat.copernic.disciplinevents.model.Time
 
@@ -15,7 +15,7 @@ class RHorariosViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     fun render(time: Time, onClickListener: (Time) -> Unit) {
-        binding.Horario.text = time.time.toString()
+        binding.Horario.text = time.date + " " + time.time
 
         binding.btnEdit.setOnClickListener {
             onClickListener(time)

@@ -1,6 +1,7 @@
 package cat.copernic.disciplinevents.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +21,7 @@ class editInfoTime : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+        arguments?.let {}
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,17 +31,19 @@ class editInfoTime : Fragment() {
         binding = FragmentEditInfoTimeBinding.bind(view)
 
         //OnClick btn save
-        binding.btnG.setOnClickListener{
-            //Nav to rEvents
-            //findNavController().navigate(R.id.action_editInfoTime_to_editInfoEvent)
-            val action = editInfoTimeDirections.actionEditInfoTimeToEditInfoEvent(argsEvent.currentEvent)
+        binding.btnSave.setOnClickListener {
+
+
+            //Nav to EditInfoEvent
+            val action = editInfoTimeDirections.actionEditInfoTimeToInfoEvent(args.currentEvent)
             findNavController().navigate(action)
         }
 
         //OnClick btn cancel
-        binding.btnC.setOnClickListener{
-            //Nav to rEvents
-            findNavController().navigate(R.id.action_editInfoTime_to_editInfoEvent)
+        binding.btnCancelarr.setOnClickListener{
+            //Nav to EditInfoEvent
+            val action = editInfoTimeDirections.actionEditInfoTimeToInfoEvent(args.currentEvent)
+            findNavController().navigate(action)
         }
 
     }
@@ -55,7 +57,7 @@ class editInfoTime : Fragment() {
         binding = FragmentEditInfoTimeBinding.inflate(inflater, container, false)
 
         //Add values of object in Layout
-        binding.time.text = args.currentTime.time.toString()
+        //binding.editTextDate.text = args.currentTime.time.toString()
 
         return binding.root
     }

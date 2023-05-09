@@ -5,50 +5,58 @@ import cat.copernic.disciplinevents.model.Time
 import java.util.ArrayList
 
 class REventosProvider{
-    companion object {
+    /*companion object {
         val listEvents = listOf<Event>(
             Event(
                 "pepito1",
                 "pepitoGrillo1",
+                "dsasdsadsd",
                 ArrayList<Time>(RHorariosProvider.listTime)
             ),
             Event(
                 "pepito2",
                 "pepitoGrillo2",
+                "dsasdsadsd",
                 ArrayList<Time>(RHorariosProvider.listTime)
             ),
             Event(
                 "pepito3",
                 "pepitoGrillo3",
+                "dsasdsadsd",
                 ArrayList<Time>(RHorariosProvider.listTime)
             ),
             Event(
                 "pepito4",
                 "pepitoGrillo4",
+                "dsasdsadsd",
                 ArrayList<Time>(RHorariosProvider.listTime)
             ),
             Event(
                 "pepito5",
                 "pepitoGrillo1",
+                "dsasdsadsd",
                 ArrayList<Time>(RHorariosProvider.listTime)
             ),
             Event(
                 "pepito6",
                 "pepitoGrillo2",
+                "dsasdsadsd",
                 ArrayList<Time>(RHorariosProvider.listTime)
             ),
             Event(
                 "pepito7",
                 "pepitoGrillo3",
+                "dsasdsadsd",
                 ArrayList<Time>(RHorariosProvider.listTime)
             ),
             Event(
                 "pepito8",
                 "pepitoGrillo4",
+                "dsasdsadsd",
                 ArrayList<Time>(RHorariosProvider.listTime)
             )
 
         )
-    }
+    }*/
 
 }

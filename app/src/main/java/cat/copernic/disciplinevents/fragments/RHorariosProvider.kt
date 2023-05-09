@@ -8,7 +8,7 @@ import java.util.ArrayList
 import java.util.Date
 
 class RHorariosProvider {
-    companion object {
+    /*companion object {
         val listTime = listOf<Time>(
             Time(
                 Date(2002, 4, 3)
@@ -24,5 +24,5 @@ class RHorariosProvider {
 
 
         )
-    }
+    }*/
 }

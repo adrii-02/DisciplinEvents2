@@ -30,6 +30,15 @@
         <action
             android:id="@+id/action_infoEvent_to_REventos"
             app:destination="@id/REventos" />
+        <argument
+            android:name="currentEvent"
+            app:argType="cat.copernic.disciplinevents.model.Event" />
+        <action
+            android:id="@+id/action_infoEvent_to_editInfoTime"
+            app:destination="@id/editInfoTime" />
+        <action
+            android:id="@+id/action_infoEvent_to_createTime"
+            app:destination="@id/createTime" />
     </fragment>
 
     <!--NAV EDIT INFO EVENT TO PRINCIPAL-->
@@ -89,8 +98,23 @@
         <argument
             android:name="currentTime"
             app:argType="cat.copernic.disciplinevents.model.Time" />
+        <argument
+            android:name="currentEvent"
+            app:argType="cat.copernic.disciplinevents.model.Event" />
         <action
-            android:id="@+id/action_editInfoTime_to_editInfoEvent"
-            app:destination="@id/editInfoEvent" />
+            android:id="@+id/action_editInfoTime_to_infoEvent"
+            app:destination="@id/infoEvent" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTime"
+        android:name="cat.copernic.disciplinevents.fragments.createTime"
+        android:label="fragment_create_time"
+        tools:layout="@layout/fragment_create_time" >
+        <argument
+            android:name="currentEvent"
+            app:argType="cat.copernic.disciplinevents.model.Event" />
+        <action
+            android:id="@+id/action_createTime_to_infoEvent"
+            app:destination="@id/infoEvent" />
     </fragment>
 </navigation>

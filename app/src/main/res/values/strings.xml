@@ -43,4 +43,8 @@
     <string name="foto_perfil">foto_perfil</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
+    <string name="g_nero">Género</string>
+    <string name="crear_evento">Crear Evento</string>
+    <string name="descripci_n">Descripción</string>
+    <string name="crear_horario">Crear Horario</string>
 </resources>
