@@ -92,7 +92,7 @@ class EditInfoEvent : Fragment() {
 
             val recyclerView = binding.recyclerTimes
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = RHorariosAdapter(args.currentEvent.times, {onItemSelected(it)})
+            recyclerView.adapter = RHorariosAdapter(args.currentEvent.times, { onItemSelected(it) }, { onItemDeletedSelected(it) })
 
         }.addOnFailureListener { exception ->
             Log.println( Log.ERROR,"","No se han cargado los horarios :(")
@@ -104,6 +104,12 @@ class EditInfoEvent : Fragment() {
         val action = EditInfoEventDirections.actionEditInfoEventToEditInfoTime(time, args.currentEvent)
         findNavController().navigate(action)
     }
+
+    private fun onItemDeletedSelected(time: Time){
+        //Delete Item
+        timeDAO.deleteTime(args.currentEvent, time)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -133,6 +133,6 @@ class Register : AppCompatActivity() {
         var gender = binding.inputGender2.text.toString()
 
         //Return object with values
-        return User(name, lastName, email, gender,null)
+        return User(name, lastName, email, gender, false,null)
     }
 }

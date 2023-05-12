@@ -84,4 +84,29 @@ class EventDAO {
             events
         }
     }
+        fun deleteEvent(event: Event) {
+            val db = FirebaseFirestore.getInstance()
+            val eventRef = db.collection("eventos").document(event.idEvent)
+            val horariosRef = eventRef.collection("horarios")
+
+            horariosRef.get()
+                .addOnSuccessListener { horariosSnapshot ->
+                    db.runTransaction { transaction ->
+                        for (horarioDoc in horariosSnapshot) {
+                            transaction.delete(horarioDoc.reference)
+                        }
+
+                        transaction.delete(eventRef)
+                    }
+                        .addOnSuccessListener {
+                            Log.d("TAG", "Evento y horarios eliminados correctamente")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("TAG", "Error al eliminar el Evento y horarios", e)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("TAG", "Error al obtener la lista de horarios", e)
+                }
+        }
 }

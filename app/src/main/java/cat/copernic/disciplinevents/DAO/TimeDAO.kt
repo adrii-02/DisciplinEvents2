@@ -1,6 +1,7 @@
 package cat.copernic.disciplinevents.DAO
 
 import android.util.Log
+import cat.copernic.disciplinevents.model.Event
 import cat.copernic.disciplinevents.model.Time
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -27,9 +28,10 @@ class TimeDAO {
                 if (result != null) {
                     for (document in result) {
                         val data = document.data
+                        val idTime = document.id
                         val horario = data["horario"] as String
                         val fecha = data["fecha"] as String
-                        val time = Time(fecha, horario)
+                        val time = Time(idTime, fecha, horario)
                         horarios.add(time)
                     }
                 }
@@ -61,7 +63,35 @@ class TimeDAO {
             }
     }
 
-    fun editHorario() {
-        //Acabar función
+    fun editTime(event: Event, time: Time) {
+        // Init DAO
+        userDAO = UserDAO()
+        bd = userDAO.getCurrentDB()
+
+        // Users
+        bd.collection("eventos").document(event.idEvent).collection("horarios").document(time.idTime).update(
+            hashMapOf(
+                "fecha" to time.date,
+                "horario" to time.time
+            ) as Map<String, Any>
+        ).addOnSuccessListener {
+
+            Log.d("TAG", "Horario actualizado correctamente")
+        }.addOnFailureListener { e ->
+            Log.e("TAG", "Error al actualizar el Horario", e)
+        }
+    }
+
+    fun deleteTime(event: Event, time: Time) {
+        // Init DAO
+        userDAO = UserDAO()
+        bd = userDAO.getCurrentDB()
+
+        val documentRef = bd.collection("eventos").document(event.idEvent).collection("horarios").document(time.idTime)
+        documentRef.delete().addOnSuccessListener {
+            Log.d("TAG", "Horario eliminado correctamente")
+        }.addOnFailureListener { e ->
+            Log.e("TAG", "Error al eliminar el Horario", e)
+        }
     }
 }

@@ -49,6 +49,7 @@
     <dimen name="size_text1">16sp</dimen>
     <dimen name="size_text2">14sp</dimen>
     <dimen name="size_text3">12sp</dimen>
+    <dimen name="mainMarginTop">60dp</dimen>
 
 
 </resources>

@@ -36,7 +36,7 @@ class createTime : Fragment() {
         calendar = Calendar.getInstance()
 
         //Init time obj
-        timeObj = Time("", "")
+        timeObj = Time("", "", "")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,9 +62,6 @@ class createTime : Fragment() {
 
         binding.btnCrear.setOnClickListener {
             try {
-                val fechaHoraString = "${date} ${time}"
-                val fechaHoraFormato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-                val fechaHora = fechaHoraFormato.parse(fechaHoraString)
 
                 // Guardar la fecha y hora en el objeto timeObj
                 timeObj.date = date

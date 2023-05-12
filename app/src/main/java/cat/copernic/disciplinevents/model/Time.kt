@@ -8,6 +8,7 @@ import java.util.Date
 
 @Parcelize
 data class Time(
+    var idTime: String,
     var date: String,
     var time: String
 ): Parcelable

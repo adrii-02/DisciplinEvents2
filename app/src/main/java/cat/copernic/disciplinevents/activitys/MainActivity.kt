@@ -1,37 +1,24 @@
 package cat.copernic.disciplinevents.activitys
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.util.AttributeSet
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import cat.copernic.disciplinevents.R
 import cat.copernic.disciplinevents.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.navigation.fragment.findNavController
 import cat.copernic.disciplinevents.DAO.UserDAO
-import cat.copernic.disciplinevents.databinding.AppBarMainBinding
-import cat.copernic.disciplinevents.databinding.FragmentREventosBinding
-import cat.copernic.disciplinevents.fragments.CreateEvent
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,7 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var bd: FirebaseFirestore
     private lateinit var userDAO: UserDAO
 
-    //COMMIT DE PRUEBA PARA EL GITHUB
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,6 +47,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Set ActionBar into Toolbar
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
+
+        //Change Title
+        //val actionBar = supportActionBar
+        //actionBar?.setTitle("DisciplinEvents")
 
         //Save DrawerLayout in drawer
         drawer = binding.drawerLayout
@@ -83,6 +73,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Select this like ItemSelectListener
         navigationView.setNavigationItemSelectedListener(this)
         //FINISH -> LATERAL MENU & TOOLBAR
+
     }
 
     //CALL METHOD WHEN SELECTED MENU ITEM
@@ -107,6 +98,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+
+        //val navController = findNavController(R.id.navHostFragment)
+        //navController.setGraph(R.navigation.admin_nav_graph)
+
+        return super.onCreateView(name, context, attrs)
+
+
     }
 
     //CALL METHOD AFTER onCreate

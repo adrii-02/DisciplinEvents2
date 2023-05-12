@@ -15,7 +15,8 @@ class REventosAdapter(
     // Constructor parameter (lambda function)
     // Extends of ViewHolder" because this class is a Adapter
     private val onClickListener: (Event) -> Unit,
-    private val onClickListener2: (Event) -> Unit) : RecyclerView.Adapter<REventosViewHolder>()
+    private val onClickListener2: (Event) -> Unit,
+    private val onClickListener3: (Event) -> Unit): RecyclerView.Adapter<REventosViewHolder>()
 
 {
     // Inflates a layout file for each list item
@@ -34,6 +35,6 @@ class REventosAdapter(
     // Passing in the corresponding Event (item) object and the onClickListener
     override fun onBindViewHolder(holder: REventosViewHolder, position: Int) {
         val item = listEvents[position]
-        holder.render(item, onClickListener, onClickListener2)
+        holder.render(item, onClickListener, onClickListener2, onClickListener3)
     }
 }

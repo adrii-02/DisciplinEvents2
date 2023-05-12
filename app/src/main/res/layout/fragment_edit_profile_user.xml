@@ -7,67 +7,108 @@
     android:layout_height="match_parent"
     tools:context=".fragments.profileUser">
 
-    <Button
-        android:id="@+id/btnCancelar"
-        android:layout_width="@dimen/btnStandardWidth"
-        android:layout_height="@dimen/btnStandardHeight"
-        android:layout_marginBottom="60dp"
-        android:text="Cancelar"
-        android:textSize="@dimen/size_text2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/img_usuario"
         android:layout_width="@dimen/imgLogoStandardWidth"
         android:layout_height="@dimen/imgLogoStandardHeight"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="@dimen/mainMarginTop"
         android:contentDescription="@string/foto_perfil"
         android:src="@drawable/foto_perfil"
+        android:translationZ="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/apellido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/txtStandard"
-        android:layout_marginTop="20dp"
-        android:text="Apellidos"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/subTltNombre"
+        style="@style/subTltStandard"
+        android:text="@string/nombre"
+        android:layout_marginLeft="@dimen/default_margin"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutname"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombre" />
+        app:layout_constraintTop_toBottomOf="@+id/img_usuario" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutname"
+        style="@style/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        app:layout_constraintStart_toStartOf="@+id/subTltNombre"
+        app:layout_constraintTop_toBottomOf="@+id/subTltNombre">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputLayoutNombreContent"
+            style="@style/textInputLayout"
+            android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/genero"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/txtStandard"
-        android:layout_marginTop="20dp"
-        android:text="Genero"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/subTltApellido"
+        style="@style/subTltStandard"
+        android:text="@string/apellidos"
+        android:layout_marginLeft="@dimen/default_margin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apellido" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutname" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutApellido"
+        style="@style/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        app:layout_constraintStart_toStartOf="@+id/subTltApellido"
+        app:layout_constraintTop_toBottomOf="@+id/subTltApellido">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputLayoutApellidoContent"
+            style="@style/textInputLayout"
+            android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/subTltGenero"
+        style="@style/subTltStandard"
+        android:text="@string/g_nero"
+        android:layout_marginLeft="@dimen/default_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutApellido" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutGenero"
+        style="@style/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        app:layout_constraintStart_toStartOf="@+id/subTltGenero"
+        app:layout_constraintTop_toBottomOf="@+id/subTltGenero">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputLayoutGeneroContent"
+            style="@style/textInputLayout"
+            android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnGuardar"
         android:layout_width="@dimen/btnStandardWidth"
         android:layout_height="@dimen/btnStandardHeight"
-        android:layout_marginBottom="60dp"
         android:text="guardar"
         android:textSize="@dimen/size_text2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/nombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/txtStandard"
-        android:layout_marginTop="60dp"
-        android:text="Nombre"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_usuario" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="@dimen/btnStandardWidth"
+        android:layout_height="@dimen/btnStandardHeight"
+        android:text="Cancelar"
+        android:textSize="@dimen/size_text2"
+        android:layout_margin="@dimen/default_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

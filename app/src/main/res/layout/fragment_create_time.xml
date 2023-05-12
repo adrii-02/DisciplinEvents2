@@ -19,17 +19,20 @@
 
             <DatePicker
                 android:id="@+id/inputDate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mainMarginTop"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+            <TextView
         android:id="@+id/textDate"
-        style="@style/subTltStandard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Selecciona una fecha"
+        android:textSize="@dimen/size_title1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputDate" />
@@ -44,8 +47,11 @@
 
     <TextView
         android:id="@+id/textTime"
-        style="@style/subTltStandard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Selecciona un horario"
+        android:textSize="@dimen/size_title1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputTime" />

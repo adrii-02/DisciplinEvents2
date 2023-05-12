@@ -17,12 +17,13 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mainMarginTop"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Agregamos el botón de suma -->
         <Button
             android:id="@+id/btn_suma"
-            android:layout_width="360dp"
+            android:layout_width="@dimen/btnStandardWidth"
             android:layout_height="50dp"
             android:layout_gravity="end"
             android:background="@color/BeigeClaro_2"

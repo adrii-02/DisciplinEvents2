@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.disciplinevents.R
 import cat.copernic.disciplinevents.model.Time
 
-class RHorariosAdapter(private val listTime: List<Time>, private val onClickListener: (Time) -> Unit) : RecyclerView.Adapter<RHorariosViewHolder>(){
+class RHorariosAdapter(
+    private val listTime: List<Time>,
+    private val onClickListener: (Time) -> Unit,
+    private val onClickListener2: (Time) -> Unit): RecyclerView.Adapter<RHorariosViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RHorariosViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -20,7 +23,7 @@ class RHorariosAdapter(private val listTime: List<Time>, private val onClickList
 
     override fun onBindViewHolder(holder: RHorariosViewHolder, position: Int) {
         val item = listTime[position]
-        holder.render(item, onClickListener)
+        holder.render(item, onClickListener, onClickListener2)
     }
 
 }

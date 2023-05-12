@@ -14,11 +14,15 @@ class RHorariosViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding = ItemTimeBinding.bind(view)
     }
 
-    fun render(time: Time, onClickListener: (Time) -> Unit) {
+    fun render(time: Time, onClickListener: (Time) -> Unit, onClickListener2: (Time) -> Unit) {
         binding.Horario.text = time.date + " " + time.time
 
         binding.btnEdit.setOnClickListener {
             onClickListener(time)
+        }
+
+        binding.btnDelete.setOnClickListener {
+            onClickListener2(time)
         }
 
     }

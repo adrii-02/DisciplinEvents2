@@ -21,13 +21,13 @@
 
             <TextView
                 android:id="@+id/Horario"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/marginTop"
                 android:text="Nombre del Evento"
-                android:textSize="@dimen/size_text1"
+                android:textSize="@dimen/size_title2"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+                app:layout_constraintEnd_toStartOf="@+id/btnEdit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
