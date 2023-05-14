@@ -16,6 +16,7 @@ import cat.copernic.disciplinevents.databinding.FragmentREventosBinding
 import cat.copernic.disciplinevents.databinding.FragmentRUsersBinding
 import cat.copernic.disciplinevents.model.Event
 import cat.copernic.disciplinevents.model.User
+import hotchemi.android.rate.AppRate
 
 
 class RUsers : Fragment() {
@@ -41,6 +42,10 @@ class RUsers : Fragment() {
 
         //Call fun initRecyclerView
         initRecyclerView()
+
+        // Google Play
+        AppRate.with(requireActivity()).setInstallDays(0).setLaunchTimes(2).setRemindInterval(1).monitor()
+        AppRate.showRateDialogIfMeetsConditions(requireActivity())
     }
 
     override fun onCreateView(

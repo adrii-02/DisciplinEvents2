@@ -21,6 +21,7 @@ import cat.copernic.disciplinevents.adapters.REventosAdapter
 import cat.copernic.disciplinevents.databinding.FragmentEditInfoEventBinding
 import cat.copernic.disciplinevents.databinding.FragmentREventosBinding
 import cat.copernic.disciplinevents.model.Event
+import hotchemi.android.rate.AppRate
 
 class REventos : Fragment() {
 
@@ -48,6 +49,10 @@ class REventos : Fragment() {
 
         //Call fun initRecyclerView
         initRecyclerView()
+
+        // Google Play
+        AppRate.with(requireActivity()).setInstallDays(0).setLaunchTimes(2).setRemindInterval(1).monitor()
+        AppRate.showRateDialogIfMeetsConditions(requireActivity())
 
         //Nav to CreateEvent
         binding.btnSuma.setOnClickListener{
@@ -94,11 +99,6 @@ class REventos : Fragment() {
 
         //Delete Item
         eventDAO.deleteEvent(event)
-
-        //Recharge Fragment
-        //val fragmentManager = supportFragmentManager
-        //val fragmentTransaction = fragmentManager.beginTransaction()
-        //val currentFragment = fragmentManager.findFragmentById(com.google.android.material.R.id.container)
 
         showNotification(requireContext(), "El Evento: " + event.name, "Ha sido eliminado")
 

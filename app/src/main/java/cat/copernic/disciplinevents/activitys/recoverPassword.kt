@@ -12,6 +12,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+
+/**
+
+Clase que maneja la recuperación de contraseña.
+
+Hereda de la clase AppCompatActivity.
+ */
 class recoverPassword : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecoverPasswordBinding

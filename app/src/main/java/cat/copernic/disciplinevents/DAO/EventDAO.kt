@@ -7,13 +7,23 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+
+/**
+
+    Clase que define el objeto DAO para eventos.
+ */
 class EventDAO {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var bd: FirebaseFirestore
     private lateinit var userDAO : UserDAO
 
-    //Fun insert Event of currentUser
+    /**
+
+    Método que inserta un evento para el usuario actual.
+
+    @param event el evento a ser insertado.
+     */
     fun setEvent(event: Event){
         //Init DAO
         userDAO = UserDAO()
@@ -40,6 +50,13 @@ class EventDAO {
         }
     }
 
+
+    /**
+
+    Método que actualiza un evento existente en la base de datos.
+
+    @param event el evento a ser actualizado.
+     */
     fun editEvent(event: Event) {
         // Init DAO
         userDAO = UserDAO()
@@ -60,7 +77,12 @@ class EventDAO {
         }
     }
 
+    /**
 
+    Método que obtiene una lista de eventos del usuario actual.
+
+    @return una tarea que devuelve una lista de eventos.
+     */
     fun getEvents(): Task<ArrayList<Event>> {
         val events = ArrayList<Event>()
         // Init DAO
@@ -84,6 +106,14 @@ class EventDAO {
             events
         }
     }
+
+
+    /**
+
+    Método que elimina un evento y sus horarios de la base de datos.
+
+    @param event el evento a eliminar.
+     */
         fun deleteEvent(event: Event) {
             val db = FirebaseFirestore.getInstance()
             val eventRef = db.collection("eventos").document(event.idEvent)

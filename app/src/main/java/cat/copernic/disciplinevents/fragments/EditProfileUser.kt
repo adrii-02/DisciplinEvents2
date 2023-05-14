@@ -114,7 +114,7 @@ class EditProfileUser : Fragment() {
         binding.imgUsuario.setOnClickListener {
 
             // Launch the intent to select an image from the gallery
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            //Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             getContent.launch("image/*")
 
         }
@@ -144,7 +144,6 @@ class EditProfileUser : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             Utils.loadImageFromFirebaseStorage(binding)
         }
-
 
         return binding.root
     }

@@ -20,6 +20,12 @@ import cat.copernic.disciplinevents.DAO.UserDAO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+
+La clase MainActivity es la pantalla principal de la aplicación.
+
+Implementa la interfaz NavigationView.OnNavigationItemSelectedListener para manejar la selección de elementos del menú lateral.
+ */
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
@@ -76,7 +82,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    //CALL METHOD WHEN SELECTED MENU ITEM
+    /**
+
+    Método llamado cuando se selecciona un elemento del menú lateral.
+
+    @param item el elemento seleccionado.
+
+    @return true si el elemento seleccionado es válido.
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment)
         val navController = navHostFragment?.findNavController()
@@ -110,20 +123,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    //CALL METHOD AFTER onCreate
+    /**
+
+    Método llamado después de onCreate.
+    Sincroniza el estado del toggle.
+     */
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         toggle.syncState()
 
     }
 
-    //CALL METHOD IF BE A CHANGE IN DEVICE CONFIGURATION
+    /**
+
+    Método llamado si hay un cambio en la configuración del dispositivo.
+    @param newConfig la nueva configuración del dispositivo.
+     */
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         toggle.onConfigurationChanged(newConfig)
     }
 
-    //CALL METHOD WHEN MENU ITEM IS SELECT
+    /**
+
+    Método que se llama cuando se selecciona un elemento del menú.
+    @param item El elemento del menú seleccionado.
+    @return Verdadero si el elemento de menú seleccionado es el botón de hamburguesa, falso en caso contrario.
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //If menu item selected is the burger
         if(toggle.onOptionsItemSelected(item)){
@@ -132,7 +158,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return super.onOptionsItemSelected(item)
     }
 
-    //FUN LOGOUT
+    /**
+
+    Método para cerrar sesión.
+
+    @param auth Objeto FirebaseAuth que representa la sesión del usuario.
+     */
     private fun logOut(auth: FirebaseAuth){
         //LogOut
         auth.signOut()

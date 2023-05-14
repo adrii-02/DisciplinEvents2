@@ -19,6 +19,12 @@ import cat.copernic.disciplinevents.databinding.ActivityMainAdminBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+
+La clase MainActivityAdmin es la pantalla principal de la aplicación si eres Admin.
+
+Implementa la interfaz NavigationView.OnNavigationItemSelectedListener para manejar la selección de elementos del menú lateral.
+ */
 class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainAdminBinding

@@ -18,12 +18,18 @@ class TimeDAO {
 
     fun getHorarios(idEvento: String): Task<ArrayList<Time>> {
         val horarios = ArrayList<Time>()
-        // Init DAO
+
+        // Inicializar DAO
         userDAO = UserDAO()
         bd = userDAO.getCurrentDB()
+
+        // Definir una consulta que apunta a la subcolección "horarios" de un documento de evento específico
         val query = bd.collection("eventos").document(idEvento).collection("horarios")
+
+        // Llamar al método get en la consulta definida anteriormente y agregar un escuchador para manejar la respuesta
         return query.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                // Si la tarea se completa con éxito, recorrer el resultado y agregar los horarios a la lista de horarios
                 val result = task.result
                 if (result != null) {
                     for (document in result) {
@@ -36,10 +42,12 @@ class TimeDAO {
                     }
                 }
             } else {
+                // Si la tarea no se completa con éxito, registrar un error en los registros
                 val exception = task.exception
                 Log.e("TAG", "Error al descargar documentos", exception)
             }
         }.continueWith { task ->
+            // Devolver una tarea con la lista de horarios
             horarios
         }
     }

@@ -121,8 +121,6 @@ class Login : AppCompatActivity() {
             }
         }
     }
-
-    //SAVE SESSION
     override fun onStart() {
         super.onStart()
 
