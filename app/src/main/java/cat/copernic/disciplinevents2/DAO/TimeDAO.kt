@@ -1,6 +1,7 @@
 package cat.copernic.disciplinevents2.DAO
 
 import android.util.Log
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.model.Event
 import cat.copernic.disciplinevents2.model.Time
 import com.google.android.gms.tasks.Task
@@ -12,12 +13,12 @@ class TimeDAO {
     private lateinit var bd: FirebaseFirestore
     private lateinit var userDAO : UserDAO
 
-    fun getHorarios(idEvento: String): Task<ArrayList<Time>> {
+    /*fun getHorarios(idEvento: String): Task<ArrayList<Time>> {
         val horarios = ArrayList<Time>()
 
         // Inicializar DAO
         userDAO = UserDAO()
-        bd = userDAO.getCurrentDB()
+        bd = Utils.getCurrentDB()
 
         // Definir una consulta que apunta a la subcolección "horarios" de un documento de evento específico
         val query = bd.collection("eventos").document(idEvento).collection("horarios")
@@ -46,12 +47,12 @@ class TimeDAO {
             // Devolver una tarea con la lista de horarios
             horarios
         }
-    }
+    }*/
 
-    fun setHorario(idEvento: String, horario: Time): Task<Void> {
+    /*fun setHorario(idEvento: String, horario: Time): Task<Void> {
         // Init DAO
         userDAO = UserDAO()
-        bd = userDAO.getCurrentDB()
+        bd = Utils.getCurrentDB()
 
         // Add new horario to "horarios" subcollection of the specified evento document
         return bd.collection("eventos").document(idEvento).collection("horarios").document().set(
@@ -65,12 +66,12 @@ class TimeDAO {
             }.addOnFailureListener { e ->
                 Log.e("TAG", "Error al crear el horario", e)
             }
-    }
+    }*/
 
-    fun editTime(event: Event, time: Time) {
+    /*fun editTime(event: Event, time: Time) {
         // Init DAO
         userDAO = UserDAO()
-        bd = userDAO.getCurrentDB()
+        bd = Utils.getCurrentDB()
 
         // Users
         bd.collection("eventos").document(event.idEvent).collection("horarios").document(time.idTime).update(
@@ -84,12 +85,12 @@ class TimeDAO {
         }.addOnFailureListener { e ->
             Log.e("TAG", "Error al actualizar el Horario", e)
         }
-    }
+    }*/
 
-    fun deleteTime(event: Event, time: Time) {
+    /*fun deleteTime(event: Event, time: Time) {
         // Init DAO
         userDAO = UserDAO()
-        bd = userDAO.getCurrentDB()
+        bd = Utils.getCurrentDB()
 
         val documentRef = bd.collection("eventos").document(event.idEvent).collection("horarios").document(time.idTime)
         documentRef.delete().addOnSuccessListener {
@@ -97,5 +98,5 @@ class TimeDAO {
         }.addOnFailureListener { e ->
             Log.e("TAG", "Error al eliminar el Horario", e)
         }
-    }
+    }*/
 }

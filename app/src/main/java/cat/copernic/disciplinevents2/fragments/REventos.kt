@@ -12,22 +12,35 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.disciplinevents2.DAO.EventDAO
 import cat.copernic.disciplinevents2.DAO.UserDAO
 import cat.copernic.disciplinevents2.R
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.adapters.REventosAdapter
 import cat.copernic.disciplinevents2.databinding.FragmentREventosBinding
 import cat.copernic.disciplinevents2.model.Event
+import cat.copernic.disciplinevents2.model.Time
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import hotchemi.android.rate.AppRate
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class REventos : Fragment() {
 
     private lateinit var binding: FragmentREventosBinding
-    private lateinit var eventDAO: EventDAO
-    private lateinit var userDAO: UserDAO
+    private lateinit var auth: FirebaseAuth
+    private lateinit var bd: FirebaseFirestore
     private lateinit var listEvents: ArrayList<Event>
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var rEventosAdapter: REventosAdapter
+
     // Definir las constantes para el canal de notificación
     private val CHANNEL_ID = "my_channel"
     private val CHANNEL_NAME = "My Notification Channel"
@@ -35,9 +48,6 @@ class REventos : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //INIT userDAO
-        userDAO = UserDAO()
-        eventDAO = EventDAO()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,15 +72,16 @@ class REventos : Fragment() {
 
     private fun initRecyclerView(){
 
-        eventDAO.getEvents().addOnSuccessListener { events ->
+        getEvents().addOnSuccessListener { events ->
 
             //listEvents
             listEvents = events
 
             // Use the events list here to initialize the RecyclerView adapter
-            val recyclerView = binding.recyclerEvents
+            recyclerView = binding.recyclerEvents
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = REventosAdapter(listEvents, { onItemEditSelected(it) }, { onItemSelected(it) }, { onItemDeleteSelected(it) })
+            rEventosAdapter = REventosAdapter(listEvents, { onItemEditSelected(it) }, { onItemSelected(it) }, { onItemDeleteSelected(it) })
+            recyclerView.adapter = rEventosAdapter
 
         }.addOnFailureListener { exception ->
 
@@ -97,7 +108,10 @@ class REventos : Fragment() {
     private fun onItemDeleteSelected(event: Event){
 
         //Delete Item
-        eventDAO.deleteEvent(event)
+        deleteEvent(event)
+
+        //Recharge RecyclerView
+        rEventosAdapter.deleteEvent(event)
 
         showNotification(requireContext(), "El Evento: " + event.name, "Ha sido eliminado")
 
@@ -137,5 +151,54 @@ class REventos : Fragment() {
         // Inflate the layout for this fragment init binding
         binding = FragmentREventosBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    private fun getEvents(): Task<ArrayList<Event>> {
+        val events = ArrayList<Event>()
+
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
+        val query = bd.collection("eventos").whereEqualTo("usuarioId", Utils.getUserId())
+        return query.get().addOnSuccessListener { result ->
+            for (document in result) {
+                val data = document.data
+                val idEvent = document.id
+                val name = data["nombre"] as String
+                val description = data["descripcion"] as String
+                val email = data["usuarioId"] as String
+                val listTimes = ArrayList<Time>()
+
+                val event = Event(idEvent, name, description, email, listTimes)
+                events.add(event)
+            }
+        }.continueWith { task ->
+            events
+        }
+    }
+
+    private fun deleteEvent(event: Event) {
+        bd = Utils.getCurrentDB()
+        val eventRef = bd.collection("eventos").document(event.idEvent)
+        val horariosRef = eventRef.collection("horarios")
+
+        horariosRef.get()
+            .addOnSuccessListener { horariosSnapshot ->
+                bd.runTransaction { transaction ->
+                    for (horarioDoc in horariosSnapshot) {
+                        transaction.delete(horarioDoc.reference)
+                    }
+
+                    transaction.delete(eventRef)
+                }
+                    .addOnSuccessListener {
+                        Log.d("TAG", "Evento y horarios eliminados correctamente")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("TAG", "Error al eliminar el Evento y horarios", e)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.e("TAG", "Error al obtener la lista de horarios", e)
+            }
     }
 }

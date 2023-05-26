@@ -1,6 +1,7 @@
 package cat.copernic.disciplinevents2.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cat.copernic.disciplinevents2.databinding.FragmentEditInfoTimeBinding
 import cat.copernic.disciplinevents2.DAO.TimeDAO
+import cat.copernic.disciplinevents2.DAO.UserDAO
+import cat.copernic.disciplinevents2.Utils.Utils
+import cat.copernic.disciplinevents2.model.Event
+import cat.copernic.disciplinevents2.model.Time
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 
@@ -16,15 +22,12 @@ class editInfoTime : Fragment() {
 
     private lateinit var binding: FragmentEditInfoTimeBinding
     private lateinit var calendar: Calendar
-    private lateinit var timeDAO: TimeDAO
+    private lateinit var bd: FirebaseFirestore
     private val args by navArgs<editInfoTimeArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
-
-        //Init DAO
-        timeDAO = TimeDAO()
 
         //Init getInstance Calendar
         calendar = Calendar.getInstance()
@@ -60,7 +63,7 @@ class editInfoTime : Fragment() {
             args.currentTime.time = binding.textTime.text.toString()
 
             //Edit Time
-            timeDAO.editTime(args.currentEvent, args.currentTime)
+            editTime(args.currentEvent, args.currentTime)
 
             //Nav to EditInfoEvent
             val action = editInfoTimeDirections.actionEditInfoTimeToInfoEvent(args.currentEvent)
@@ -90,5 +93,22 @@ class editInfoTime : Fragment() {
         binding.textTime.text = args.currentTime.time
 
         return binding.root
+    }
+
+    private fun editTime(event: Event, time: Time) {
+        bd = Utils.getCurrentDB()
+
+        // Users
+        bd.collection("eventos").document(event.idEvent).collection("horarios").document(time.idTime).update(
+            hashMapOf(
+                "fecha" to time.date,
+                "horario" to time.time
+            ) as Map<String, Any>
+        ).addOnSuccessListener {
+
+            Log.d("TAG", "Horario actualizado correctamente")
+        }.addOnFailureListener { e ->
+            Log.e("TAG", "Error al actualizar el Horario", e)
+        }
     }
 }

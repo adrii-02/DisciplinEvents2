@@ -9,5 +9,39 @@
         android:id="@+id/RUsers"
         android:name="cat.copernic.disciplinevents2.fragments.RUsers"
         android:label="fragment_r_users"
-        tools:layout="@layout/fragment_r_users" />
+        tools:layout="@layout/fragment_r_users" >
+        <action
+            android:id="@+id/action_RUsers_to_profileUserForAdmin"
+            app:destination="@+id/profileUserForAdmin" />
+    </fragment>
+    <!--NAV PROFILE USER TO EDIT PROFILE USER-->
+    <fragment
+        android:id="@+id/profileUserForAdmin"
+        android:name="cat.copernic.disciplinevents2.fragments.profileUserForAdmin"
+        android:label="fragment_profile_user"
+        tools:layout="@layout/fragment_profile_user_for_admin" >
+        <argument
+            android:name="currentUser"
+            app:argType="cat.copernic.disciplinevents2.model.User" />
+        <action
+            android:id="@+id/action_profileUserForAdmin_to_editProfileUserForAdmin"
+            app:destination="@id/editProfileUserForAdmin2" />
+        <action
+            android:id="@+id/action_profileUserForAdmin_to_RUsers"
+            app:destination="@id/RUsers" />
+    </fragment>
+
+    <!--NAV EDIT PROFILE USER TO PROFILE USER-->
+    <fragment
+        android:id="@+id/editProfileUserForAdmin2"
+        android:name="cat.copernic.disciplinevents2.fragments.EditProfileUserForAdmin"
+        android:label="fragment_edit_profile_user_for_admin"
+        tools:layout="@layout/fragment_edit_profile_user_for_admin" >
+        <argument
+            android:name="currentUser"
+            app:argType="cat.copernic.disciplinevents2.model.User" />
+        <action
+            android:id="@+id/action_editProfileUserForAdmin2_to_profileUserForAdmin"
+            app:destination="@id/profileUserForAdmin" />
+    </fragment>
 </navigation>

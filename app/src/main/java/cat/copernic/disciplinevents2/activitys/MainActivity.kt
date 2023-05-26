@@ -16,6 +16,7 @@ import cat.copernic.disciplinevents2.R
 import cat.copernic.disciplinevents2.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import cat.copernic.disciplinevents2.DAO.UserDAO
+import cat.copernic.disciplinevents2.Utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -45,8 +46,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         userDAO = UserDAO()
 
         //GET INSTANCE
-        auth = userDAO.getCurrentUser()
-        bd = userDAO.getCurrentDB()
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
 
         //START -> LATERAL MENU & TOOLBAR
         //Set ActionBar into Toolbar

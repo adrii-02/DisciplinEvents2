@@ -4,16 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.disciplinevents2.R
+import cat.copernic.disciplinevents2.model.Time
 import cat.copernic.disciplinevents2.model.User
 
 class RUsersAdapter(
 
     // List of Event (Parameter)
-    private val listUsers:List<User>,
+    private val listUsers:ArrayList<User>,
 
     // Constructor parameter (lambda function)
     // Extends of ViewHolder" because this class is a Adapter
-    private val onClickListener: (User) -> Unit): RecyclerView.Adapter<RUsersViewHolder>()
+    private val onClickListener1: (User) -> Unit,
+    private val onClickListener2: (User) -> Unit): RecyclerView.Adapter<RUsersViewHolder>()
 
 {
     // Inflates a layout file for each list item
@@ -32,6 +34,12 @@ class RUsersAdapter(
     // Passing in the corresponding Event (item) object and the onClickListener
     override fun onBindViewHolder(holder: RUsersViewHolder, position: Int) {
         val item = listUsers[position]
-        holder.render(item, onClickListener)
+        holder.render(item, onClickListener1, onClickListener2)
+    }
+
+    fun deleteUser(user: User){
+        val item = listUsers.indexOf(user)
+        listUsers.remove(user)
+        notifyItemRemoved(item)
     }
 }

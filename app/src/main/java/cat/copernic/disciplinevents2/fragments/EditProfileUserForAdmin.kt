@@ -17,28 +17,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cat.copernic.disciplinevents2.R
-import cat.copernic.disciplinevents2.databinding.FragmentEditProfileUserBinding
-import cat.copernic.disciplinevents2.DAO.UserDAO
 import cat.copernic.disciplinevents2.Utils.Utils
+import cat.copernic.disciplinevents2.databinding.FragmentEditProfileUserBinding
 import cat.copernic.disciplinevents2.model.User
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 
-class EditProfileUser : Fragment() {
+class EditProfileUserForAdmin : Fragment() {
 
     private lateinit var binding: FragmentEditProfileUserBinding //Binding
     private lateinit var builder: android.app.AlertDialog.Builder
     private lateinit var auth: FirebaseAuth
     private lateinit var bd: FirebaseFirestore
-    private val args by navArgs<EditProfileUserArgs>()
+    private val args by navArgs<EditProfileUserForAdminArgs>()
     private var selectedImageUri: Uri? = null
     private lateinit var getContent: ActivityResultLauncher<String> //Implicit Intent
 
@@ -57,19 +52,19 @@ class EditProfileUser : Fragment() {
             //establim la ruta on s'emmagatzemarà l'imatge i establim el nom
             val imageRef = storageRef.child("imatges/usuaris").child(text)
 
-            if(selectedImageUri != null) {
-                // Load the image into the ImageView
-                Glide.with(this)
-                    .load(uri)
-                    .into(binding.imgUsuario)
+                if(selectedImageUri != null) {
+                    // Load the image into the ImageView
+                    Glide.with(this)
+                        .load(uri)
+                        .into(binding.imgUsuario)
 
-                //pujem l'imatge
-                imageRef.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
-                    //l'imatge s'ha pujat correctament
-                }.addOnFailureListener { e ->
-                    Log.e("Error al subir imagen", e.message.toString())
+                    //pujem l'imatge
+                    imageRef.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
+                        //l'imatge s'ha pujat correctament
+                    }.addOnFailureListener { e ->
+                        Log.e("Error al subir imagen", e.message.toString())
+                    }
                 }
-            }
         }
 
     }
@@ -92,8 +87,9 @@ class EditProfileUser : Fragment() {
                 //Call fun editEvent
                 editUser(args.currentUser)
 
-                //Nav to rEvents
-                findNavController().navigate(R.id.action_editProfileUser_to_profileUser)
+                //Nav to editProfileUser with obj parameter
+                val action = EditProfileUserForAdminDirections.actionEditProfileUserForAdmin2ToProfileUserForAdmin(args.currentUser)
+                findNavController().navigate(action)
 
             } else {
                 builder = android.app.AlertDialog.Builder(requireContext())
@@ -107,8 +103,9 @@ class EditProfileUser : Fragment() {
 
         //OnClick btn cancel
         binding.btnCancelar.setOnClickListener{
-            //Nav to ProfileUser
-            findNavController().navigate(R.id.action_editProfileUser_to_profileUser)
+            //Nav to editProfileUser with obj parameter
+            val action = EditProfileUserForAdminDirections.actionEditProfileUserForAdmin2ToProfileUserForAdmin(args.currentUser)
+            findNavController().navigate(action)
         }
 
         //OnClick change photo
@@ -141,7 +138,7 @@ class EditProfileUser : Fragment() {
         editGender.text = Editable.Factory.getInstance().newEditable(args.currentUser.gender)
 
         lifecycleScope.launch {
-            Utils.cargarImagenDesdeUrl(requireContext(), binding.imgUsuario, Utils.getUserId())
+            Utils.cargarImagenDesdeUrl(requireContext(), binding.imgUsuario, args.currentUser.email.toString())
         }
 
         return binding.root
@@ -152,7 +149,7 @@ class EditProfileUser : Fragment() {
         bd = Utils.getCurrentDB()
 
         // Users
-        bd.collection("usuarios").document(Utils.getUserId()).update(
+        bd.collection("usuarios").document(args.currentUser.email.toString()).update(
             hashMapOf(
                 "nombre" to user.name,
                 "apellidos" to user.lastName,
@@ -165,4 +162,5 @@ class EditProfileUser : Fragment() {
             Log.e("TAG", "Error al actualizar el Usuario", e)
         }
     }
+
 }

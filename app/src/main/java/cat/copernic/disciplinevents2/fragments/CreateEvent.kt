@@ -1,30 +1,33 @@
 package cat.copernic.disciplinevents2.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import cat.copernic.disciplinevents2.DAO.EventDAO
+import cat.copernic.disciplinevents2.DAO.UserDAO
 import cat.copernic.disciplinevents2.R
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.databinding.FragmentCreateEventBinding
 import cat.copernic.disciplinevents2.model.Event
 import cat.copernic.disciplinevents2.model.Time
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class CreateEvent : Fragment() {
 
     private lateinit var binding: FragmentCreateEventBinding
     private lateinit var builder: android.app.AlertDialog.Builder
-    private lateinit var eventDAO: EventDAO
     private lateinit var event: Event
+    private lateinit var auth: FirebaseAuth
+    private lateinit var bd: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //Init eventDAO
-        eventDAO = EventDAO()
 
         //Init event
         event = Event("", "", "", "", ArrayList<Time>())
@@ -44,7 +47,7 @@ class CreateEvent : Fragment() {
             if(binding.textInputLayoutNombreContent.text.toString().isNotEmpty()&&binding.textInputLayoutDescripcionContent.text.toString().isNotEmpty())
             {
                 // Call fun setEvent
-                eventDAO.setEvent(event)
+                setEvent(event)
 
                 // Nav to REvent
                 findNavController().navigate(R.id.action_createEvent_to_REventos)
@@ -78,5 +81,28 @@ class CreateEvent : Fragment() {
         return binding.root
     }
 
+    private fun setEvent(event: Event){
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
+
+        var userEmail = Utils.getUserId()
+
+        //Assigned email to event
+        event.currentUserEmail = userEmail
+
+        //Users
+        bd.collection("eventos").document().set(
+            hashMapOf(
+                "nombre" to event.name,
+                "descripcion" to event.description,
+                "usuarioId" to event.currentUserEmail
+            )
+        ).addOnSuccessListener {
+            Log.d("TAG", "Evento registrado correctamente")
+
+        }.addOnFailureListener { e ->
+            Log.e("TAG", "Error al registrar el Evento", e)
+        }
+    }
 
 }

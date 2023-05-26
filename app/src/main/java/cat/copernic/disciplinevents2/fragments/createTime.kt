@@ -1,6 +1,7 @@
 package cat.copernic.disciplinevents2.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import cat.copernic.disciplinevents2.DAO.TimeDAO
+import cat.copernic.disciplinevents2.DAO.UserDAO
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.databinding.FragmentCreateTimeBinding
 import cat.copernic.disciplinevents2.model.Time
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.ParseException
 import java.util.*
 
@@ -19,16 +24,13 @@ class createTime : Fragment() {
 
     private lateinit var binding: FragmentCreateTimeBinding
     private lateinit var calendar: Calendar
-    private lateinit var timeDAO: TimeDAO
+    private lateinit var bd: FirebaseFirestore
     private lateinit var timeObj: Time
     private val args by navArgs<createTimeArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
-
-       //Init DAO
-        timeDAO = TimeDAO()
 
         //Init getInstance Calendar
         calendar = Calendar.getInstance()
@@ -65,7 +67,7 @@ class createTime : Fragment() {
                 timeObj.date = date
                 timeObj.time = time
 
-                timeDAO.setHorario(args.currentEvent.idEvent, timeObj)
+                setHorario(args.currentEvent.idEvent, timeObj)
 
                 //Nav to InfoEvent
                 val action = createTimeDirections.actionCreateTimeToInfoEvent(args.currentEvent)
@@ -92,5 +94,22 @@ class createTime : Fragment() {
         binding = FragmentCreateTimeBinding.inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    private fun setHorario(idEvento: String, horario: Time): Task<Void> {
+        bd = Utils.getCurrentDB()
+
+        // Add new horario to "horarios" subcollection of the specified evento document
+        return bd.collection("eventos").document(idEvento).collection("horarios").document().set(
+            hashMapOf(
+                "fecha" to horario.date,
+                "horario" to horario.time
+            )
+        )
+            .addOnSuccessListener {
+                Log.d("TAG", "Horario creado correctamente")
+            }.addOnFailureListener { e ->
+                Log.e("TAG", "Error al crear el horario", e)
+            }
     }
 }

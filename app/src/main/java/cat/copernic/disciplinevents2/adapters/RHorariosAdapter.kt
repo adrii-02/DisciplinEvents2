@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cat.copernic.disciplinevents2.R
+import cat.copernic.disciplinevents2.model.Event
 import cat.copernic.disciplinevents2.model.Time
 
 class RHorariosAdapter(
-    private val listTime: List<Time>,
+    private val listTime: ArrayList<Time>,
     private val onClickListener: (Time) -> Unit,
     private val onClickListener2: (Time) -> Unit): RecyclerView.Adapter<RHorariosViewHolder>(){
 
@@ -25,4 +26,9 @@ class RHorariosAdapter(
         holder.render(item, onClickListener, onClickListener2)
     }
 
+    fun deleteTime(time: Time){
+        val item = listTime.indexOf(time)
+        listTime.remove(time)
+        notifyItemRemoved(item)
+    }
 }

@@ -3,8 +3,10 @@ package cat.copernic.disciplinevents2.activitys
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import cat.copernic.disciplinevents2.DAO.UserDAO
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.databinding.ActivityRegisterBinding
 import cat.copernic.disciplinevents2.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -32,8 +34,8 @@ class Register : AppCompatActivity() {
         userDAO = UserDAO()
 
         //GET INSTANCE
-        auth = userDAO.getCurrentUser()
-        bd = userDAO.getCurrentDB()
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
 
         //LOGIN
         binding.txtTienesCuenta.setOnClickListener{
@@ -103,7 +105,7 @@ class Register : AppCompatActivity() {
                 var userObj = readData()
 
                 //Call fun insertUser
-                userDAO.setUser(bd, userObj)
+                setUser(bd, userObj)
 
                 //Navigation to main activity
                 startActivity(Intent(this, MainActivity::class.java))
@@ -131,5 +133,24 @@ class Register : AppCompatActivity() {
 
         //Return object with values
         return User(name, lastName, email, gender, false,null)
+    }
+
+    private fun setUser(bd: FirebaseFirestore, userObj: User) {
+
+        //Users
+        bd.collection("usuarios").document(userObj.email.toString()).set(
+            hashMapOf(
+                "email" to userObj.email,
+                "nombre" to userObj.name,
+                "apellidos" to userObj.lastName,
+                "genero" to userObj.gender,
+                "admin" to userObj.admin
+            )
+        ).addOnSuccessListener {
+            Log.d("TAG", "Usuario registrado correctamente")
+        }.addOnFailureListener { e ->
+            Log.e("TAG", "Error al registrar el usuario", e)
+        }
+
     }
 }

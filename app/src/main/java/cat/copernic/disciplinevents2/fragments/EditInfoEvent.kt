@@ -13,26 +13,27 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import cat.copernic.disciplinevents2.R
 import cat.copernic.disciplinevents2.databinding.FragmentEditInfoEventBinding
-import cat.copernic.disciplinevents2.DAO.EventDAO
-import cat.copernic.disciplinevents2.DAO.TimeDAO
+import cat.copernic.disciplinevents2.Utils.Utils
+import cat.copernic.disciplinevents2.adapters.REventosAdapter
 import cat.copernic.disciplinevents2.adapters.RHorariosAdapter
+import cat.copernic.disciplinevents2.model.Event
 import cat.copernic.disciplinevents2.model.Time
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class EditInfoEvent : Fragment() {
 
     private lateinit var binding: FragmentEditInfoEventBinding
-    private lateinit var timeDAO: TimeDAO
-    private lateinit var eventDAO: EventDAO
     private lateinit var builder: android.app.AlertDialog.Builder
+    private lateinit var auth: FirebaseAuth
+    private lateinit var bd: FirebaseFirestore
+    private lateinit var rHorariosAdapter: RHorariosAdapter
     private val args by navArgs<EditInfoEventArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
-
-        //Init DAO
-        timeDAO = TimeDAO()
-        eventDAO = EventDAO()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,7 +55,7 @@ class EditInfoEvent : Fragment() {
             if(binding.textInputLayoutNombreContent.text.toString().isNotEmpty()&&binding.textInputLayoutDescriptionContent.text.toString().isNotEmpty())
             {
                 //Call fun editEvent
-                eventDAO.editEvent(args.currentEvent)
+                editEvent(args.currentEvent)
 
                 //Nav to rEvents
                 findNavController().navigate(R.id.action_editInfoEvent_to_REventos)
@@ -78,12 +79,13 @@ class EditInfoEvent : Fragment() {
     }
 
     private fun initRecyclerView(){
-        timeDAO.getHorarios(args.currentEvent.idEvent).addOnSuccessListener { times ->
+        getHorarios(args.currentEvent.idEvent).addOnSuccessListener { times ->
             args.currentEvent.times = times
 
             val recyclerView = binding.recyclerTimes
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = RHorariosAdapter(args.currentEvent.times, { onItemSelected(it) }, { onItemDeletedSelected(it) })
+            rHorariosAdapter = RHorariosAdapter(args.currentEvent.times, { onItemSelected(it) }, { onItemDeletedSelected(it) })
+            recyclerView.adapter = rHorariosAdapter
 
         }.addOnFailureListener { exception ->
             Log.println( Log.ERROR,"","No se han cargado los horarios :(")
@@ -98,7 +100,10 @@ class EditInfoEvent : Fragment() {
 
     private fun onItemDeletedSelected(time: Time){
         //Delete Item
-        timeDAO.deleteTime(args.currentEvent, time)
+        deleteTime(args.currentEvent, time)
+
+        //Recharge RecyclerView
+        rHorariosAdapter.deleteTime(time)
     }
 
     override fun onCreateView(
@@ -118,5 +123,67 @@ class EditInfoEvent : Fragment() {
         editDescription.text = Editable.Factory.getInstance().newEditable(args.currentEvent.description)
 
         return binding.root
+    }
+
+    private fun editEvent(event: Event) {
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
+
+        // Users
+        bd.collection("eventos").document(event.idEvent).update(
+            hashMapOf(
+                "nombre" to event.name,
+                "descripcion" to event.description,
+            ) as Map<String, Any>
+        ).addOnSuccessListener {
+
+            Log.d("TAG", "Evento actualizado correctamente")
+        }.addOnFailureListener { e ->
+            Log.e("TAG", "Error al actualizar el Evento", e)
+        }
+    }
+
+    private fun getHorarios(idEvento: String): Task<ArrayList<Time>> {
+        val horarios = ArrayList<Time>()
+        bd = Utils.getCurrentDB()
+
+        // Definir una consulta que apunta a la subcolección "horarios" de un documento de evento específico
+        val query = bd.collection("eventos").document(idEvento).collection("horarios")
+
+        // Llamar al método get en la consulta definida anteriormente y agregar un escuchador para manejar la respuesta
+        return query.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Si la tarea se completa con éxito, recorrer el resultado y agregar los horarios a la lista de horarios
+                val result = task.result
+                if (result != null) {
+                    for (document in result) {
+                        val data = document.data
+                        val idTime = document.id
+                        val horario = data["horario"] as String
+                        val fecha = data["fecha"] as String
+                        val time = Time(idTime, fecha, horario)
+                        horarios.add(time)
+                    }
+                }
+            } else {
+                // Si la tarea no se completa con éxito, registrar un error en los registros
+                val exception = task.exception
+                Log.e("TAG", "Error al descargar documentos", exception)
+            }
+        }.continueWith { task ->
+            // Devolver una tarea con la lista de horarios
+            horarios
+        }
+    }
+
+    private fun deleteTime(event: Event, time: Time) {
+        bd = Utils.getCurrentDB()
+
+        val documentRef = bd.collection("eventos").document(event.idEvent).collection("horarios").document(time.idTime)
+        documentRef.delete().addOnSuccessListener {
+            Log.d("TAG", "Horario eliminado correctamente")
+        }.addOnFailureListener { e ->
+            Log.e("TAG", "Error al eliminar el Horario", e)
+        }
     }
 }

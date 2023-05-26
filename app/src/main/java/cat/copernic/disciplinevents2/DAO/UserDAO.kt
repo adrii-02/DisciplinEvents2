@@ -1,6 +1,7 @@
 package cat.copernic.disciplinevents2.DAO
 
 import android.util.Log
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.model.Event
 import cat.copernic.disciplinevents2.model.User
 import com.google.android.gms.tasks.Task
@@ -15,18 +16,10 @@ class UserDAO {
     private lateinit var bd: FirebaseFirestore
     private lateinit var userDAO : UserDAO
 
-    // Fun getCurrentUser
-    fun getCurrentUser(): FirebaseAuth {
-        return Firebase.auth
-    }
 
-    //Fun getCurrentDB
-    fun getCurrentDB(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
 
     //Fun insertUser
-    fun setUser(bd: FirebaseFirestore, userObj: User) {
+    /*fun setUser(bd: FirebaseFirestore, userObj: User) {
 
         //Users
         bd.collection("usuarios").document(userObj.email.toString()).set(
@@ -44,13 +37,13 @@ class UserDAO {
         }
 
     }
-
-    fun getUser(): Task<User?> {
+*/
+    /*fun getUser(): Task<User?> {
         //Init DAO
         userDAO = UserDAO()
 
         val db = FirebaseFirestore.getInstance()
-        val userId = userDAO.getUserId()
+        val userId = Utils.getUserId()
         val documentRef = db.collection("usuarios").document(userId)
 
         return documentRef.get().continueWith { task ->
@@ -75,14 +68,12 @@ class UserDAO {
         }.addOnFailureListener { e ->
             Log.e("TAG", "Error al obtener el usuario con ID: $userId", e)
         }
-    }
+    }*/
 
-    fun getUsers(): Task<ArrayList<User>> {
+    /*fun getUsers(): Task<ArrayList<User>> {
         val listUsers = ArrayList<User>()
-        // Init DAO
-        userDAO = UserDAO()
-        auth = userDAO.getCurrentUser()
-        bd = userDAO.getCurrentDB()
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
         val query = bd.collection("usuarios")
         return query.get().addOnSuccessListener { result ->
             for (document in result) {
@@ -100,16 +91,14 @@ class UserDAO {
         }.continueWith { task ->
             listUsers
         }
-    }
+    }*/
 
-    fun editUser(user: User) {
-        // Init DAO
-        userDAO = UserDAO()
-        auth = userDAO.getCurrentUser()
-        bd = userDAO.getCurrentDB()
+    /*fun editUser(user: User) {
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
 
         // Users
-        bd.collection("usuarios").document(userDAO.getUserId()).update(
+        bd.collection("usuarios").document(Utils.getUserId()).update(
             hashMapOf(
                 "nombre" to user.name,
                 "apellidos" to user.lastName,
@@ -121,12 +110,10 @@ class UserDAO {
         }.addOnFailureListener { e ->
             Log.e("TAG", "Error al actualizar el Usuario", e)
         }
-    }
+    }*/
 
-    fun deleteUser(user: User){
-        // Init DAO
-        userDAO = UserDAO()
-        bd = userDAO.getCurrentDB()
+    /*fun deleteUser(user: User){
+        bd = Utils.getCurrentDB()
 
         val documentRef = bd.collection("usuarios").document(user.email.toString())
         documentRef.delete().addOnSuccessListener {
@@ -134,11 +121,7 @@ class UserDAO {
         }.addOnFailureListener { e ->
             Log.e("TAG", "Error al eliminar el Usuario", e)
         }
-    }
+    }*/
 
-    //Fun getEmail
-    fun getUserId(): String {
-        val currentUser = Firebase.auth.currentUser
-        return currentUser?.email.toString()
-    }
+    
 }

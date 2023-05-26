@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import cat.copernic.disciplinevents2.DAO.UserDAO
 import cat.copernic.disciplinevents2.R
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.databinding.ActivityMainAdminBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -46,7 +47,7 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
         userDAO = UserDAO()
 
         //GET INSTANCE
-        auth = userDAO.getCurrentUser()
+        auth = Utils.getCurrentUser()
 
         //GET NavController
         navController = findNavController(R.id.navHostFragmentAdmin)

@@ -6,26 +6,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cat.copernic.disciplinevents2.DAO.UserDAO
 import cat.copernic.disciplinevents2.R
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.adapters.RUsersAdapter
 import cat.copernic.disciplinevents2.databinding.FragmentRUsersBinding
+import cat.copernic.disciplinevents2.model.Event
 import cat.copernic.disciplinevents2.model.User
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import hotchemi.android.rate.AppRate
 
 
 class RUsers : Fragment() {
 
     private lateinit var binding: FragmentRUsersBinding
-    private lateinit var userDAO: UserDAO
+    private lateinit var auth: FirebaseAuth
+    private lateinit var bd: FirebaseFirestore
+    private lateinit var rUsersAdapter: RUsersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
-
-        //INIT DAO
-        userDAO = UserDAO()
 
         initRecyclerView()
     }
@@ -54,12 +59,13 @@ class RUsers : Fragment() {
 
     private fun initRecyclerView(){
 
-        userDAO.getUsers().addOnSuccessListener { users ->
+        getUsers().addOnSuccessListener { users ->
 
             // Use the events list here to initialize the RecyclerView adapter
             val recyclerView = binding.recyclerUsers
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = RUsersAdapter(users, { onItemDeleteSelected(it) })
+            rUsersAdapter = RUsersAdapter(users, { onItemDeleteSelected(it) }, { onItemSelected(it) })
+            recyclerView.adapter = rUsersAdapter
 
         }.addOnFailureListener { exception ->
 
@@ -70,10 +76,49 @@ class RUsers : Fragment() {
     private fun onItemDeleteSelected(user: User){
 
         //Delete Item
-        userDAO.deleteUser(user)
+        deleteUser(user)
 
-        //Recharge Recyclerview
-        initRecyclerView()
+        //Recharge RecyclerView
+        rUsersAdapter.deleteUser(user)
 
+    }
+
+    private fun onItemSelected(user: User){
+        val action = RUsersDirections.actionRUsersToProfileUserForAdmin(user)
+        findNavController().navigate(action)
+    }
+
+    private fun getUsers(): Task<ArrayList<User>> {
+        val listUsers = ArrayList<User>()
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
+        val query = bd.collection("usuarios")
+        return query.get().addOnSuccessListener { result ->
+            for (document in result) {
+                val data = document.data
+                val name = data["nombre"] as String
+                val lastname = data["apellidos"] as String
+                val genero = data["genero"] as String
+                val email = document.id
+                val admin = data["admin"] as Boolean
+                val listEvents = ArrayList<Event>()
+
+                val user = User(name, lastname, email, genero, admin, listEvents)
+                listUsers.add(user)
+            }
+        }.continueWith { task ->
+            listUsers
+        }
+    }
+
+    private fun deleteUser(user: User){
+        bd = Utils.getCurrentDB()
+
+        val documentRef = bd.collection("usuarios").document(user.email.toString())
+        documentRef.delete().addOnSuccessListener {
+            Log.d("TAG", "Usuario eliminado correctamente")
+        }.addOnFailureListener { e ->
+            Log.e("TAG", "Error al eliminar el Usuario", e)
+        }
     }
 }

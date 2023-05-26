@@ -1,6 +1,7 @@
 package cat.copernic.disciplinevents2.DAO
 
 import android.util.Log
+import cat.copernic.disciplinevents2.Utils.Utils
 import cat.copernic.disciplinevents2.model.Event
 import cat.copernic.disciplinevents2.model.Time
 import com.google.android.gms.tasks.Task
@@ -24,13 +25,13 @@ class EventDAO {
 
     @param event el evento a ser insertado.
      */
-    fun setEvent(event: Event){
+    /*fun setEvent(event: Event){
         //Init DAO
         userDAO = UserDAO()
-        auth = userDAO.getCurrentUser()
-        bd = userDAO.getCurrentDB()
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
 
-        var userEmail = userDAO.getUserId()
+        var userEmail = Utils.getUserId()
 
         //Assigned email to event
         event.currentUserEmail = userEmail
@@ -48,7 +49,7 @@ class EventDAO {
         }.addOnFailureListener { e ->
             Log.e("TAG", "Error al registrar el Evento", e)
         }
-    }
+    }*/
 
 
     /**
@@ -57,11 +58,11 @@ class EventDAO {
 
     @param event el evento a ser actualizado.
      */
-    fun editEvent(event: Event) {
+    /*fun editEvent(event: Event) {
         // Init DAO
         userDAO = UserDAO()
-        auth = userDAO.getCurrentUser()
-        bd = userDAO.getCurrentDB()
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
 
         // Users
         bd.collection("eventos").document(event.idEvent).update(
@@ -75,7 +76,7 @@ class EventDAO {
         }.addOnFailureListener { e ->
             Log.e("TAG", "Error al actualizar el Evento", e)
         }
-    }
+    }*/
 
     /**
 
@@ -83,13 +84,13 @@ class EventDAO {
 
     @return una tarea que devuelve una lista de eventos.
      */
-    fun getEvents(): Task<ArrayList<Event>> {
+    /*fun getEvents(): Task<ArrayList<Event>> {
         val events = ArrayList<Event>()
         // Init DAO
         userDAO = UserDAO()
-        auth = userDAO.getCurrentUser()
-        bd = userDAO.getCurrentDB()
-        val query = bd.collection("eventos").whereEqualTo("usuarioId", userDAO.getUserId())
+        auth = Utils.getCurrentUser()
+        bd = Utils.getCurrentDB()
+        val query = bd.collection("eventos").whereEqualTo("usuarioId", Utils.getUserId())
         return query.get().addOnSuccessListener { result ->
             for (document in result) {
                 val data = document.data
@@ -105,7 +106,7 @@ class EventDAO {
         }.continueWith { task ->
             events
         }
-    }
+    }*/
 
 
     /**
@@ -114,7 +115,7 @@ class EventDAO {
 
     @param event el evento a eliminar.
      */
-        fun deleteEvent(event: Event) {
+        /*fun deleteEvent(event: Event) {
             val db = FirebaseFirestore.getInstance()
             val eventRef = db.collection("eventos").document(event.idEvent)
             val horariosRef = eventRef.collection("horarios")
@@ -138,5 +139,5 @@ class EventDAO {
                 .addOnFailureListener { e ->
                     Log.e("TAG", "Error al obtener la lista de horarios", e)
                 }
-        }
+        }*/
 }

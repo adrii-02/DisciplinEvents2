@@ -10,7 +10,7 @@ import cat.copernic.disciplinevents2.model.Event
 class REventosAdapter(
 
     // List of Event (Parameter)
-    private val listEvents:List<Event>,
+    private val listEvents:ArrayList<Event>,
 
     // Constructor parameter (lambda function)
     // Extends of ViewHolder" because this class is a Adapter
@@ -36,5 +36,11 @@ class REventosAdapter(
     override fun onBindViewHolder(holder: REventosViewHolder, position: Int) {
         val item = listEvents[position]
         holder.render(item, onClickListener, onClickListener2, onClickListener3)
+    }
+
+    fun deleteEvent(event: Event){
+        val item = listEvents.indexOf(event)
+        listEvents.remove(event)
+        notifyItemRemoved(item)
     }
 }

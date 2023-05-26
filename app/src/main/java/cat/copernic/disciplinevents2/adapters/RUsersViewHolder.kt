@@ -17,11 +17,15 @@ class RUsersViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     // Fun Render
     // Save event values in layout item
-    fun render(user: User, onClickListener: (User) -> Unit) {
+    fun render(user: User, onClickListener1: (User) -> Unit, onClickListener2: (User) -> Unit) {
         binding.email.text = user.email.toString()
 
         binding.btnDelete.setOnClickListener {
-            onClickListener(user)
+            onClickListener1(user)
+        }
+
+        binding.itemUser.setOnClickListener {
+            onClickListener2(user)
         }
 
     }
