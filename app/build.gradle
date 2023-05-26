@@ -11,15 +11,15 @@ plugins {
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
-    namespace 'cat.copernic.disciplinevents'
+    namespace 'cat.copernic.disciplinevents2'
     compileSdk 33
 
     defaultConfig {
-        applicationId "cat.copernic.disciplinevents"
+        applicationId "cat.copernic.disciplinevents2"
         minSdk 21
         targetSdk 33
-        versionCode 4
-        versionName "4.0"
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

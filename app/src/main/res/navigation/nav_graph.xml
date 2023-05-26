@@ -8,7 +8,7 @@
     <!--NAV PRINCIPAL-->
     <fragment
         android:id="@+id/REventos"
-        android:name="cat.copernic.disciplinevents.fragments.REventos"
+        android:name="cat.copernic.disciplinevents2.fragments.REventos"
         android:label="fragment_r_eventos"
         tools:layout="@layout/fragment_r_eventos" >
         <action
@@ -24,7 +24,7 @@
     <!--NAV INFO EVENT TO PRINCIPAL-->
     <fragment
         android:id="@+id/infoEvent"
-        android:name="cat.copernic.disciplinevents.fragments.InfoEvent"
+        android:name="cat.copernic.disciplinevents2.fragments.InfoEvent"
         android:label="fragment_info_event"
         tools:layout="@layout/fragment_info_event" >
         <action
@@ -32,7 +32,7 @@
             app:destination="@id/REventos" />
         <argument
             android:name="currentEvent"
-            app:argType="cat.copernic.disciplinevents.model.Event" />
+            app:argType="cat.copernic.disciplinevents2.model.Event" />
         <action
             android:id="@+id/action_infoEvent_to_editInfoTime"
             app:destination="@id/editInfoTime" />
@@ -44,7 +44,7 @@
     <!--NAV EDIT INFO EVENT TO PRINCIPAL-->
     <fragment
         android:id="@+id/editInfoEvent"
-        android:name="cat.copernic.disciplinevents.fragments.EditInfoEvent"
+        android:name="cat.copernic.disciplinevents2.fragments.EditInfoEvent"
         android:label="fragment_edit_info_event"
         tools:layout="@layout/fragment_edit_info_event" >
         <action
@@ -52,7 +52,7 @@
             app:destination="@id/REventos" />
         <argument
             android:name="currentEvent"
-            app:argType="cat.copernic.disciplinevents.model.Event" />
+            app:argType="cat.copernic.disciplinevents2.model.Event" />
         <action
             android:id="@+id/action_editInfoEvent_to_editInfoTime"
             app:destination="@id/editInfoTime" />
@@ -61,7 +61,7 @@
     <!--NAV PROFILE USER TO EDIT PROFILE USER-->
     <fragment
         android:id="@+id/profileUser"
-        android:name="cat.copernic.disciplinevents.fragments.profileUser"
+        android:name="cat.copernic.disciplinevents2.fragments.profileUser"
         android:label="fragment_profile_user"
         tools:layout="@layout/fragment_profile_user" >
         <action
@@ -72,18 +72,18 @@
     <!--NAV EDIT PROFILE USER TO PROFILE USER-->
     <fragment
         android:id="@+id/editProfileUser"
-        android:name="cat.copernic.disciplinevents.fragments.EditProfileUser"
+        android:name="cat.copernic.disciplinevents2.fragments.EditProfileUser"
         android:label="EditProfileUser" >
         <action
             android:id="@+id/action_editProfileUser_to_profileUser"
             app:destination="@id/profileUser" />
         <argument
             android:name="currentUser"
-            app:argType="cat.copernic.disciplinevents.model.User" />
+            app:argType="cat.copernic.disciplinevents2.model.User" />
     </fragment>
     <fragment
         android:id="@+id/createEvent"
-        android:name="cat.copernic.disciplinevents.fragments.CreateEvent"
+        android:name="cat.copernic.disciplinevents2.fragments.CreateEvent"
         android:label="fragment_create_event"
         tools:layout="@layout/fragment_create_event" >
         <action
@@ -92,27 +92,27 @@
     </fragment>
     <fragment
         android:id="@+id/editInfoTime"
-        android:name="cat.copernic.disciplinevents.fragments.editInfoTime"
+        android:name="cat.copernic.disciplinevents2.fragments.editInfoTime"
         android:label="fragment_edit_info_time"
         tools:layout="@layout/fragment_edit_info_time" >
         <argument
             android:name="currentTime"
-            app:argType="cat.copernic.disciplinevents.model.Time" />
+            app:argType="cat.copernic.disciplinevents2.model.Time" />
         <argument
             android:name="currentEvent"
-            app:argType="cat.copernic.disciplinevents.model.Event" />
+            app:argType="cat.copernic.disciplinevents2.model.Event" />
         <action
             android:id="@+id/action_editInfoTime_to_infoEvent"
             app:destination="@id/infoEvent" />
     </fragment>
     <fragment
         android:id="@+id/createTime"
-        android:name="cat.copernic.disciplinevents.fragments.createTime"
+        android:name="cat.copernic.disciplinevents2.fragments.createTime"
         android:label="fragment_create_time"
         tools:layout="@layout/fragment_create_time" >
         <argument
             android:name="currentEvent"
-            app:argType="cat.copernic.disciplinevents.model.Event" />
+            app:argType="cat.copernic.disciplinevents2.model.Event" />
         <action
             android:id="@+id/action_createTime_to_infoEvent"
             app:destination="@id/infoEvent" />
